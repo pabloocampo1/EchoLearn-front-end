@@ -5,11 +5,19 @@ import { CssBaseline } from "@mui/material";
 export const ThemeContext = createContext();
 
 export function ThemeContextProvider({ children }) {
-  const [darkMode, setDarkMode] = useState(false);
+  const [darkMode, setDarkMode] = useState(() => {
+    const mode = localStorage.getItem("dark"); 
+    return mode === "true"
+  });
 
   const toggleDarkMode = () => {
-    setDarkMode((prev) => !prev);
+    setDarkMode((prev) => {
+      localStorage.setItem("dark", !prev);
+       return !prev;
+    });
+    
   };
+
 
   const theme = useMemo(
     () =>

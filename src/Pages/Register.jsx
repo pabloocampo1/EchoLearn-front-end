@@ -47,7 +47,7 @@ const Register = () => {
                 <Box sx={{ width: "100%", height: "90%", display: "flex", justifyContent: "center", alignItems: "center", flexDirection: "column", p: "0px 40px" }}>
                     <Typography variant='h3' sx={{ textAlign: "center", pb: "20px", color: "white" }}>WELCOME BACK!</Typography>
                     <Typography variant='body1' sx={{ textAlign: "center", pb: "40px", color: "white", opacity: "0.50" }}>Lorem ipsum dolor sipis icing elit. Quidem praesentium possimus dolorem est conseq uuntur labo riosam accus anti</Typography>
-                    <ButtonComponent text="SIGN IN" colorBG={""} onClick={() => navigateTO("/")} />
+                    <ButtonComponent text="SIGN IN" colorBG={""} onClick={() => navigateTO("/login")} />
                 </Box>
             </Box>
 
@@ -66,7 +66,7 @@ const Register = () => {
                         <InputPassWord value={registerData.password} onChange={handleInputChange} />
                     </Box>
                     <Box sx={{ mt: "40px", display: "flex", justifyContent: "center", alignItems: "center" }}>
-                        <ButtonComponent text="SIGN UP" type="submit" />
+                        <ButtonComponent text="SIGN UP" type="submit"/>
                     </Box>
                 </form>
             </Box>

@@ -1,19 +1,22 @@
 import { Box, Button, Typography } from '@mui/material';
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import ButtonComponent from '../Components/ButtonComponet';
 import { ThemeContext } from '../Context/ThemeContext';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import OptionToLogin from '../Components/OptionToLogin';
 import InputUserName from '../Components/InputUserName';
 import InputPassWord from '../Components/InputPassword';
+import { AuthContext } from '../Context/AuthContext';
+
 
 
 const Login = () => {
-
+    const {login, state} = useContext(AuthContext);
     const [userDataCredential, setUserDataCredential] = useState({
         username: "",
         password: "",
     })
+    const navigate = useNavigate();
 
     const handleInputChange = (event) => {
         setUserDataCredential({
@@ -22,13 +25,21 @@ const Login = () => {
         })
     }
 
-    const handleSubmit = (event) => {
+    const handleSubmit = async (event) => {
         event.preventDefault();
         console.log(userDataCredential.username);
+        await login(userDataCredential)
+        console.log(state);
+        
         setUserDataCredential({
-          username:"",
-          password:"",
+            username: "",
+            password: "",
         })
+        
+    }
+
+    const navigateTo = (path) => {
+        navigate(path)
     }
 
 
@@ -59,11 +70,11 @@ const Login = () => {
                     <Box sx={{ mb: "20px", mt: "10px" }}>
                         <InputPassWord value={userDataCredential.password} onChange={handleInputChange} />
                     </Box>
-                    <Box sx={{display:"flex", justifyContent:"center"}}>
+                    <Box sx={{ display: "flex", justifyContent: "center" }}>
                         <Link style={{ marginBottom: "40px", color: "black", opacity: "0.60", textAlign: "center" }}>Forgot Your Password?</Link>
                     </Box>
                     <Box sx={{ mt: "20px", display: "flex", justifyContent: "center", alignItems: "center" }}>
-                        <ButtonComponent text="SIGN IN" type="submit" />
+                        <ButtonComponent text="SIGN IN" type="submit"  />
                     </Box>
                 </form>
 
@@ -72,12 +83,16 @@ const Login = () => {
             {/* section loggin*/}
             <Box
                 sx={{
-
                     bgcolor: "primary.main",
                     width: "40%",
                     height: "100%",
                     position: "relative",
-                    overflow: "hidden"
+                    overflow: "hidden",
+                    display:"flex",
+                    flexDirection:"column",
+                    justifyContent:"center",
+                    alignItems:"center",
+                    p:"0px 120px"
                 }}>
                 {/* Figuras geométricas  de fondo */}
                 <Box
@@ -113,6 +128,26 @@ const Login = () => {
                         transform: "rotate(45deg)",
                     }}
                 />
+                <Typography
+                    variant={"h3"}
+                    sx={{
+                        color: "white",
+                        pb: "20px",
+                    }}>
+                    Hello, friend!
+                </Typography>
+                <Typography variant='body1'
+                    sx={{
+                        color:"white",
+                        opacity:"0.50",
+                        pb: "30px",
+                        textAlign:"center"
+                    }}>
+                    Enter your username and password for start log in the aplication
+                </Typography>
+
+                <ButtonComponent text={"Sign up"} onClick={() => navigateTo("register")} />
+
 
 
             </Box>

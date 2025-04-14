@@ -1,79 +1,93 @@
+import { createContext, useReducer } from "react";
+import axiosInstance from "../Service/Api"; // asegúrate que esta instancia esté bien configurada
 
-import { Children, createContext, useReducer } from "react";
-
-import axiosInstance from "../Service/Api";
-
-
+//  Estado inicial
 const initialValue = {
     username: null,
-    token:null,
-    isAuthenticate: false,
-}
+    token: null,
+    isAuthenticated: false,
+};
 
-const authReduce = (state, action ) => {
+// Reducer
+const authReducer = (state, action) => {
     switch (action.type) {
         case "LOGIN":
             return {
                 ...state,
                 username: action.payload.username,
                 token: action.payload.token,
-                isAuthenticate: true,
-
+                isAuthenticated: action.payload.isAuthenticate,
             };
-        case "LOGAOUT":
+        case "LOGOUT":
             return {
                 ...state,
                 username: null,
                 token: null,
-                isAuthenticate: false,
-
+                isAuthenticated: false,
             };
         default:
-           return {
-            state
-           };
+            return state;
     }
-}
+};
 
+//  contexto
 export const AuthContext = createContext();
 
-export const AuthProvider = ({children}) => {
-    const [state, dispatch] = useReducer( authReduce, initialValue);
+// Provider
+export const AuthProvider = ({ children }) => {
+    const [state, dispatch] = useReducer(authReducer, initialValue);
 
-    const login = async (credential) => {
+    // Función login
+    const login = async (credentials) => {
         try {
-            const {response} = await axiosInstance.post("/api/auth/login", credential);
-            if(response.status == 200){
-                console.log("se auntentico correctamente.");
-                localStorage.setItem("token", response.token)
-            }else{
-                console.log("perra");   
+            const response = await axiosInstance.post("/api/auth/login", credentials);
+            // cambia esto si tu backend responde diferente
+
+            // Guardar en localStorage
+            if (response.status == 401) {
+                console.log("no mijoooo");
+
             }
+
+            if (response.status == 202) {
+                console.log("bien mijo");
+            }
+            let token = response.data.jwt;
+            let username = response.data.username;
+            // Actualizar estado
+            dispatch({
+                type: "LOGIN",
+                payload: { username, token },
+            });
+
+            console.log("✅ Login exitoso");
         } catch (error) {
-            console.error("perra");
-            console.log(error);
-            
+            console.error("❌ Error al iniciar sesión:", error);
+            throw error;
         }
-        
-        dispatch({
-            type:"LOGIN",
-            payload: {username: credential.username, token:credential.email}
-        })
-        console.log("ingreso sesion con:" + credential);
-        console.log(state);
-        
-    }
+    };
 
-    const register = (userData) => {
-        
+    // Función register (puede ser un POST normal)
+    const register = async (userData) => {
+        try {
+            await axiosInstance.post("/api/auth/register", userData);
+            // Autologin después de registrarse
+            await login({ username: userData.username, password: userData.password });
+        } catch (error) {
+            console.error("❌ Error al registrar:", error);
+            throw error;
+        }
+    };
 
-        const credentialForLogin = {username: userData.username, password: userData.password}
-        login(credentialForLogin)
-    }
+    // Función logout
+    const logout = () => {
+        localStorage.removeItem("token");
+        dispatch({ type: "LOGOUT" });
+    };
 
     return (
-        <AuthContext.Provider value={{ state, login, register }}>
-          {children}
+        <AuthContext.Provider value={{ state, login, logout, register }}>
+            {children}
         </AuthContext.Provider>
-      );
-}
+    );
+};

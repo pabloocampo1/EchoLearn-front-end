@@ -2,9 +2,13 @@ import React from 'react';
 
 const AdminLayout = () => {
     return (
-        <div>
-            
-        </div>
+        <Box>
+            <Box> header</Box>
+            <Outlet></Outlet>
+            <Box>
+                footer
+            </Box>
+        </Box>
     );
 };
 
