@@ -1,5 +1,6 @@
 
-import { DarkModeOutlined, LoginOutlined, Sunny } from '@mui/icons-material';
+import { DarkModeOutlined, LoginOutlined, WbSunny } from '@mui/icons-material';
+
 import { Box, Typography } from '@mui/material';
 import { useContext } from 'react';
 import { ThemeContext } from '../Context/ThemeContext';
@@ -92,7 +93,7 @@ const Header = () => {
                 <Box
                     sx={{ mr: "10px" }}
                     onClick={() => toggleDarkMode()}>
-                    {darkMode ? <Sunny sx={{ color: "primary.main" }} /> : <DarkModeOutlined sx={{ color: "primary.main" }} />}
+                    {darkMode ? <WbSunny sx={{ color: "primary.main" }}  /> : <DarkModeOutlined sx={{ color: "primary.main" }} />}
                 </Box>
                 <Box
                     sx={{ mr: "10px" }}
