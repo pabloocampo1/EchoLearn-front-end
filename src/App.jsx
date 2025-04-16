@@ -13,41 +13,43 @@ import Profile from "./Pages/Profile"
 import Home from "./Pages/Home"
 import Exercice from "./Pages/Exercice"
 import Blog from "./Pages/Blog"
+import PrivateRoute from "./Components/Routes/PrivateRoute"
+import GuestRoute from "./Components/Routes/GuestRoute"
 
 function App() {
 
     return (
         <>
-            <AuthProvider>
-                <ThemeContextProvider>
-                    <Router>
+            <Router>
+                <AuthProvider>
+                    <ThemeContextProvider>
                         <Routes>
-                            
-
                             <Route path="/" element={<UserLayout />}>
                                 <Route index element={<Home />} />
                                 <Route path="profile" element={<Profile />} />
-                                <Route path="Exam" element={<Profile />} />
+                                <Route path="Exams" element={<Profile />} />
                                 <Route path="Exercice" element={<Exercice />} />
                                 <Route path="Blog" element={<Blog />} />
                             </Route>
 
-                            <Route path="/login" element={<AuthLayout />}>
+                            <Route path="/login" element={<GuestRoute />}>
                                 <Route index element={<Login />} />
                                 <Route path="register" element={<Register />} />
                             </Route>
 
-                            <Route path="/app" element={<AdminLayout />}>
-                                <Route index element={<Dashboard />} />
+                            <Route path="/app" element={<PrivateRoute />}>
+                                <Route element={<AdminLayout />}>
+                                    <Route index element={<Dashboard />} />
+                                </Route>
                             </Route>
 
 
                             <Route path="*" element={<NotFound />} />
                         </Routes>
-                    </Router>
-                </ThemeContextProvider>
-            </AuthProvider>
 
+                    </ThemeContextProvider>
+                </AuthProvider>
+            </Router>
         </>
     )
 }

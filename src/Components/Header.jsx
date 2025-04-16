@@ -7,10 +7,13 @@ import { ThemeContext } from '../Context/ThemeContext';
 
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import { useNavigate } from 'react-router-dom';
+import { AuthContext } from '../Context/AuthContext';
 
 const Header = () => {
     const { darkMode, toggleDarkMode } = useContext(ThemeContext)
     const navigate = useNavigate();
+
+    const {state} = useContext(AuthContext);
 
     const navigateTo = (path) => {
         navigate(path)
@@ -40,7 +43,7 @@ const Header = () => {
                         listStyle: "none"
                     }}>
                         <Typography
-                            onClick={() => navigateTo("Home")}
+                            onClick={() => navigateTo("/")}
                             component="li"
                             sx={{
                                 pr: "15px",
@@ -98,7 +101,7 @@ const Header = () => {
                 <Box
                     sx={{ mr: "10px" }}
                     onClick={() => navigateTo("profile")} >
-                    <AccountCircleIcon sx={{ color: "primary.main" }} />
+                    {state.isAuthenticated && <AccountCircleIcon sx={{ color: "primary.main" }} />}
                 </Box>
                 <Box
                     sx={{ mr: "10px" }}

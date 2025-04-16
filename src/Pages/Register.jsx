@@ -1,41 +1,69 @@
 import { Box, Button, Typography } from '@mui/material';
-import { useContext, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import ButtonComponent from '../Components/ButtonComponet';
 import { useNavigate } from 'react-router-dom';
-import InputFielEmail from '../Components/InputFielEmail';
-import InputUserName from '../Components/InputUserName';
-import InputPassWord from '../Components/InputPassword';
+import InputFielEmail from '../Components/Inputs/InputFielEmail';
+import InputUserName from '../Components/Inputs/InputUserName';
+import InputPassWord from '../Components/Inputs/InputPassword';
 import { AuthContext } from '../Context/AuthContext';
-import OptionToLogin from '../Components/OptionToLogin';
+import OptionToLogin from '../Components/AuthComponents/OptionToLogin';
+import SimpleBackdrop from '../Components/SimpleBackDrop';
+import RegisterSucces from '../Components/AuthComponents/RegisterSucces';
 
 const Register = () => {
     const [registerData, setRegisterData] = useState({
         password: "",
         username: "",
         email: "",
+        roleId:1
     })
-    const { login } = useContext(AuthContext);
+    const { singUp } = useContext(AuthContext);
     const navigate = useNavigate();
     const navigateTO = (path) => navigate(path);
+    const [isLoanding, setIsLoanding] = useState(false);
+    const [createCount, setCreateCount] = useState(false);
+
+
+
     const handleInputChange = (e) => {
         setRegisterData({
             ...registerData,
             [e.target.name]: e.target.value
         });
     };
+
     const handleInput = async (event) => {
         event.preventDefault()
-        await login(registerData)
+        setIsLoanding(true)
+        const state = await singUp(registerData)
         setRegisterData({
             password:"",
             username:"",
-            email:""
+            email:"",
+            roleId:1
+            
         })
+        if (state.state) {
+            setCreateCount(true)
+        }else{
+            setCreateCount(false)
+        }
+        
+       setTimeout(() => {
+            setIsLoanding(false)
+       }, 1000)
         
     };
 
+    useEffect(() => {
+        
+    },[createCount])
+
+    
+
     return (
         <Box sx={{ bgcolor: "background.default", height: "100vh", width: "100vw", display: "flex", justifyContent: "center", alignItems: "center" }}>
+            {isLoanding && <SimpleBackdrop /> }
             <Box sx={{ bgcolor: "primary.main", width: "40%", height: "100%", position: "relative", overflow: "hidden", display: "flex", justifyContent: "start", alignItems: "center", flexDirection: "column", p: "10px 30px" }}>
                 {/* figuras */}
                 <Box sx={{ position: "absolute", top: "50%", left: "95%", width: "100px", height: "100px", bgcolor: "rgba(255, 255, 255, 0.10)" }} />
@@ -55,7 +83,8 @@ const Register = () => {
                 <Typography variant='h2' sx={{ color: "primary.main", fontWeight: "500", textAlign: "center", mt: "8vh" }}>Create Account</Typography>
                 <OptionToLogin />
                 <Typography variant='body1' sx={{ textAlign: "center", mb: "20px", mt: "60px", opacity: "0.50" }}>Or use your email for registration</Typography>
-                <form onSubmit={handleInput}>
+                {createCount ? <RegisterSucces /> : 
+                (<form onSubmit={handleInput}>
                     <Box sx={{ mb: "20px", mt: "10px" }}>
                         <InputFielEmail value={registerData.email} onChange={handleInputChange} />
                     </Box>
@@ -68,7 +97,7 @@ const Register = () => {
                     <Box sx={{ mt: "40px", display: "flex", justifyContent: "center", alignItems: "center" }}>
                         <ButtonComponent text="SIGN UP" type="submit"/>
                     </Box>
-                </form>
+                </form>)}
             </Box>
         </Box>
     );

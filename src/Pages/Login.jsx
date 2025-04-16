@@ -3,15 +3,15 @@ import React, { useContext, useState } from 'react';
 import ButtonComponent from '../Components/ButtonComponet';
 import { ThemeContext } from '../Context/ThemeContext';
 import { Link, useNavigate } from 'react-router-dom';
-import OptionToLogin from '../Components/OptionToLogin';
-import InputUserName from '../Components/InputUserName';
-import InputPassWord from '../Components/InputPassword';
+import OptionToLogin from '../Components/AuthComponents/OptionToLogin';
+import InputUserName from '../Components/Inputs/InputUserName';
+import InputPassWord from '../Components/Inputs/InputPassword';
 import { AuthContext } from '../Context/AuthContext';
 
 
 
 const Login = () => {
-    const {login, state} = useContext(AuthContext);
+    const {singIn} = useContext(AuthContext);
     const [userDataCredential, setUserDataCredential] = useState({
         username: "",
         password: "",
@@ -28,9 +28,8 @@ const Login = () => {
     const handleSubmit = async (event) => {
         event.preventDefault();
         console.log(userDataCredential.username);
-        await login(userDataCredential)
-        console.log(state);
-        
+        await singIn(userDataCredential)
+    
         setUserDataCredential({
             username: "",
             password: "",
