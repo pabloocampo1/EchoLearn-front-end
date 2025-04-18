@@ -15,7 +15,7 @@ const Header = () => {
     const { darkMode, toggleDarkMode } = useContext(ThemeContext)
     const navigate = useNavigate();
 
-    const {state, logout} = useContext(AuthContext);
+    const { state, logout } = useContext(AuthContext);
 
     const navigateTo = (path) => {
         navigate(path)
@@ -98,17 +98,19 @@ const Header = () => {
                 <Box
                     sx={{ mr: "10px" }}
                     onClick={() => toggleDarkMode()}>
-                    {darkMode ? <WbSunny sx={{ color: "primary.main" }}  /> : <DarkModeOutlined sx={{ color: "primary.main" }} />}
+                    {darkMode ? <WbSunny sx={{ color: "primary.main" }} /> : <DarkModeOutlined sx={{ color: "primary.main" }} />}
                 </Box>
                 <Box
                     sx={{ mr: "10px" }}
                     onClick={() => navigateTo("profile")} >
-                    {state.isAuthenticated && <AccountCircleIcon sx={{ color: "primary.main" }} />}
+                    {state.isAuthenticated && state.role === "ROLE_USER" && (
+                        <AccountCircleIcon sx={{ color: "primary.main" }} />
+                    )}
                 </Box>
                 <Box
                     sx={{ mr: "10px" }}
-                     >
-                    {state.isAuthenticated ? <LogoutIcon onClick={() => logout()} sx={{ color: "primary.main" }} />  : <LoginOutlined onClick={() => navigateTo("/login")} sx={{ color: "primary.main" }} />}
+                >
+                    {state.isAuthenticated ? <LogoutIcon onClick={() => logout()} sx={{ color: "primary.main" }} /> : <LoginOutlined onClick={() => navigateTo("/login")} sx={{ color: "primary.main" }} />}
                 </Box>
             </Box>
         </Box>

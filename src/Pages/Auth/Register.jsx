@@ -1,14 +1,14 @@
 import { Box, Button, Typography } from '@mui/material';
 import { useContext, useEffect, useState } from 'react';
-import ButtonComponent from '../Components/ButtonComponet';
+import ButtonComponent from '../../Components/ButtonComponet';
 import { useNavigate } from 'react-router-dom';
-import InputFielEmail from '../Components/Inputs/InputFielEmail';
-import InputUserName from '../Components/Inputs/InputUserName';
-import InputPassWord from '../Components/Inputs/InputPassword';
-import { AuthContext } from '../Context/AuthContext';
-import OptionToLogin from '../Components/AuthComponents/OptionToLogin';
-import SimpleBackdrop from '../Components/SimpleBackDrop';
-import RegisterSucces from '../Components/AuthComponents/RegisterSucces';
+import InputFielEmail from '../../Components/Inputs/InputFielEmail';
+import InputUserName from '../../Components/Inputs/InputUserName';
+import InputPassWord from '../../Components/Inputs/InputPassword';
+import { AuthContext } from '../../Context/AuthContext';
+import OptionToLogin from '../../Components/AuthComponents/OptionToLogin';
+import SimpleBackdrop from '../../Components/SimpleBackDrop';
+import RegisterSucces from '../../Components/AuthComponents/RegisterSucces';
 
 const Register = () => {
     const [registerData, setRegisterData] = useState({

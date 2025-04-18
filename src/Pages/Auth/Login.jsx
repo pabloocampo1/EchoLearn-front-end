@@ -1,13 +1,11 @@
 import { Box, Button, Typography } from '@mui/material';
 import React, { useContext, useState } from 'react';
-import ButtonComponent from '../Components/ButtonComponet';
-import { ThemeContext } from '../Context/ThemeContext';
+import ButtonComponent from '../../Components/ButtonComponet';
 import { Link, useNavigate } from 'react-router-dom';
-import OptionToLogin from '../Components/AuthComponents/OptionToLogin';
-import InputUserName from '../Components/Inputs/InputUserName';
-import InputPassWord from '../Components/Inputs/InputPassword';
-import { AuthContext } from '../Context/AuthContext';
-
+import OptionToLogin from '../../Components/AuthComponents/OptionToLogin';
+import InputUserName from '../../Components/Inputs/InputUserName';
+import InputPassWord from '../../Components/Inputs/InputPassword';
+import { AuthContext } from '../../Context/AuthContext';
 
 
 const Login = () => {

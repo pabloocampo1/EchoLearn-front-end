@@ -3,11 +3,12 @@ import axiosInstance from "../Service/Api";
 import { Await, useNavigate } from "react-router-dom";
 
 
-const initialValue = {
+const initialValue = JSON.parse(localStorage.getItem("userAuth")) || {
     username: null,
     token: null,
-    isAuthenticated: false,
-};
+    isAuthenticate: false,
+    role: null,
+  };
 
 const authReducer = (state, action) => {
     switch (action.type) {
@@ -17,6 +18,7 @@ const authReducer = (state, action) => {
                 username: action.payload.username,
                 token: action.payload.token,
                 isAuthenticated: action.payload.isAuthenticate,
+                role: action.payload.role,
             };
         case "LOGOUT":
             return {
@@ -24,6 +26,7 @@ const authReducer = (state, action) => {
                 username: null,
                 token: null,
                 isAuthenticated: false,
+                role:null
             };
         default:
             return state;
@@ -49,6 +52,7 @@ export const AuthProvider = ({ children }) => {
                         username: response.data.username,
                         token: response.data.jwt,
                         isAuthenticate: response.data.isAuthenticate,
+                        role: response.data.roles.replace(/[\\[\]" ]/g, '').split(',')[0]
                 }
                 dispatch({
                     type: "LOGIN",
@@ -112,7 +116,6 @@ export const AuthProvider = ({ children }) => {
                       });
                     if(response.status == 203) { 
                         logout()
-                        
                     }
                     
                     return response.data;
