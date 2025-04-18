@@ -34,12 +34,14 @@ function App() {
 
                             <Route path="/login" element={<GuestRoute />}>
                                 <Route index element={<Login />} />
-                                <Route path="register" element={<Register />} />
+                                <Route path="singUp" element={<Register />} />
                             </Route>
 
-                            <Route path="/app" element={<PrivateRoute />}>
+                            <Route path="/app" element={<PrivateRoute allowedRoles={["ADMIN", "SUPERADMIN"]} />}>
                                 <Route element={<AdminLayout />}>
                                     <Route index element={<Dashboard />} />
+
+                                    
                                 </Route>
                             </Route>
 

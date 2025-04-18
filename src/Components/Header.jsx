@@ -4,16 +4,18 @@ import { DarkModeOutlined, LoginOutlined, WbSunny } from '@mui/icons-material';
 import { Box, Typography } from '@mui/material';
 import { useContext } from 'react';
 import { ThemeContext } from '../Context/ThemeContext';
-
-import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../Context/AuthContext';
+
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import LogoutIcon from '@mui/icons-material/Logout';
+
 
 const Header = () => {
     const { darkMode, toggleDarkMode } = useContext(ThemeContext)
     const navigate = useNavigate();
 
-    const {state} = useContext(AuthContext);
+    const {state, logout} = useContext(AuthContext);
 
     const navigateTo = (path) => {
         navigate(path)
@@ -105,8 +107,8 @@ const Header = () => {
                 </Box>
                 <Box
                     sx={{ mr: "10px" }}
-                    onClick={() => navigateTo("/login")} >
-                    <LoginOutlined sx={{ color: "primary.main" }} />
+                     >
+                    {state.isAuthenticated ? <LogoutIcon onClick={() => logout()} sx={{ color: "primary.main" }} />  : <LoginOutlined onClick={() => navigateTo("/login")} sx={{ color: "primary.main" }} />}
                 </Box>
             </Box>
         </Box>

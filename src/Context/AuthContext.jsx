@@ -1,6 +1,6 @@
 import { createContext, useEffect, useReducer } from "react";
 import axiosInstance from "../Service/Api"; 
-import { useNavigate } from "react-router-dom";
+import { Await, useNavigate } from "react-router-dom";
 
 
 const initialValue = {
@@ -45,15 +45,17 @@ export const AuthProvider = ({ children }) => {
             const response = await axiosInstance.post("/api/auth/singIn", credentials);
             
             if (response.status == 202) {
-                console.log("logueadi");
-                dispatch({
-                    type: "LOGIN",
-                    payload: {
+                const userLoged = {
                         username: response.data.username,
                         token: response.data.jwt,
                         isAuthenticate: response.data.isAuthenticate,
-                    }
+                }
+                dispatch({
+                    type: "LOGIN",
+                    payload: userLoged
                 })
+
+                localStorage.setItem("userAuth", JSON.stringify(userLoged))
                 
                 navigateTo("/app")
             }else{
@@ -86,10 +88,10 @@ export const AuthProvider = ({ children }) => {
     }
   
     
-    // Función logout
     const logout = () => {
-        localStorage.removeItem("token");
         dispatch({ type: "LOGOUT" });
+        localStorage.removeItem("userAuth")
+        navigateTo("/login")
     };
 
     const isSomeoneAuthenticate = () => {
@@ -97,9 +99,48 @@ export const AuthProvider = ({ children }) => {
     }
 
     useEffect(() => {
-        console.log(state);
-        
-    }, [state])
+        const checkAuth = async () => {
+            const storedUser = localStorage.getItem("userAuth");
+           
+            
+            const isValidJwt = async (jwt) => {
+                try {
+                    const response = await axiosInstance.get("/api/auth/isValidJwt", {
+                        headers: {
+                          Authorization: `Bearer ${jwt}`,
+                        },
+                      });
+                    if(response.status == 203) { 
+                        logout()
+                        
+                    }
+                    
+                    return response.data;
+                } catch (error) {
+                    console.error("Error validando token:", error);
+                    return false;
+                }
+            };
+    
+            if (storedUser) {
+                const userParsed = JSON.parse(storedUser);
+                const isValid = await isValidJwt(userParsed.token);
+                
+                
+                if (isValid) {
+                    dispatch({
+                        type: "LOGIN",
+                        payload: userParsed,
+                    });
+                } else {
+                    localStorage.removeItem("userAuth");
+                }
+            }
+        };
+    
+        checkAuth(); 
+    }, []);
+    
 
     return (
         <AuthContext.Provider value={{ state, singIn, logout, singUp, isSomeoneAuthenticate }}>

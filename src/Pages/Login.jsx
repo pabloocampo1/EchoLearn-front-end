@@ -11,7 +11,7 @@ import { AuthContext } from '../Context/AuthContext';
 
 
 const Login = () => {
-    const {singIn} = useContext(AuthContext);
+    const { singIn } = useContext(AuthContext);
     const [userDataCredential, setUserDataCredential] = useState({
         username: "",
         password: "",
@@ -27,7 +27,6 @@ const Login = () => {
 
     const handleSubmit = async (event) => {
         event.preventDefault();
-        console.log(userDataCredential.username);
         await singIn(userDataCredential)
     
         setUserDataCredential({
@@ -59,7 +58,7 @@ const Login = () => {
 
 
                 <Typography variant='p' sx={{ opacity: "0.80", pt: "50px", pb: "10px" }}>Or use your credentials</Typography>
-                <Link to={"/register"} style={{ marginBottom: "40px", color: "black", opacity: "0.60" }} >You don't have a acount? create one here!</Link>
+                <Link to={"singUp"} style={{ marginBottom: "40px", color: "black", opacity: "0.60" }} >You don't have a acount? create one here!</Link>
 
                 <form onSubmit={handleSubmit}>
 
@@ -145,7 +144,7 @@ const Login = () => {
                     Enter your username and password for start log in the aplication
                 </Typography>
 
-                <ButtonComponent text={"Sign up"} onClick={() => navigateTo("register")} />
+                <ButtonComponent text={"Sign up"} onClick={() => navigateTo("singUp")} />
 
 
 

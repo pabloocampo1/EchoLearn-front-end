@@ -3,7 +3,7 @@ import { AuthContext } from '../../Context/AuthContext';
 import { Navigate, Outlet } from 'react-router-dom';
 
 const GuestRoute = () => {
-    const {state} = useContext(AuthContext);
+    const { state } = useContext(AuthContext);
     
 
     if (state.isAuthenticated) {
