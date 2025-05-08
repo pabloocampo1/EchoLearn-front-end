@@ -5,7 +5,11 @@ import React from 'react';
 const InputUserName = ({value, onChange}) => {
     return (
         <Box sx={{
-            bgcolor:"rgba(59, 176, 157, 0.05);"
+            bgcolor:"rgba(59, 176, 157, 0.05)",
+            width:{
+                xs:"200px",
+                md:"350px"
+            },
         }}>
             <Box sx={{ display: 'flex', alignItems: 'flex-end'}}>
                 <AccountCircle sx={{ color: 'action.active', mr: 1, my: 0.5 }} />  
@@ -17,7 +21,7 @@ const InputUserName = ({value, onChange}) => {
                 name='username'
                 variant="standard"
                 onChange={onChange} 
-                sx={{width:"350px"}} />
+                sx={{width:"100%"}} />
             </Box>
         </Box>
     );

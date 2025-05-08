@@ -6,7 +6,7 @@ const theme = createTheme({
       main: "#3BB09D",
       dark: "#2A8A7A",
       light: "#6FCFBC",
-      contrastText: "#FFFFFF", // Color del texto en botones
+      contrastText: "#FFFFFF", 
     },
     secondary: {
       main: "#A9E6DB", 
@@ -14,13 +14,13 @@ const theme = createTheme({
       light: "#D1F3ED",
     },
     background: {
-      default: "#F9F9F9", // Fondo general
-      paper: "#FFFFFF", // Fondo de tarjetas
+      default: "#F9F9F9", 
+      paper: "#FFFFFF", 
     },
     text: {
       mainTxt:"#FFFFFF",
-      primary: "#1E6B5E", // Texto principal
-      secondary: "#2A8A7A", // Texto en secciones secundarias
+      primary: "#1E6B5E", 
+      secondary: "#2A8A7A", 
     }
   },
 });

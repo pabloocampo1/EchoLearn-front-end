@@ -6,7 +6,7 @@ import { Await, useNavigate } from "react-router-dom";
 const initialValue = JSON.parse(localStorage.getItem("userAuth")) || {
     username: null,
     token: null,
-    isAuthenticate: false,
+    isAuthenticated: false,
     role: null,
   };
 
@@ -17,7 +17,7 @@ const authReducer = (state, action) => {
                 ...state,
                 username: action.payload.username,
                 token: action.payload.token,
-                isAuthenticated: action.payload.isAuthenticate,
+                isAuthenticated: action.payload.isAuthenticated,
                 role: action.payload.role,
             };
         case "LOGOUT":
@@ -45,13 +45,14 @@ export const AuthProvider = ({ children }) => {
 
     const singIn = async (credentials) => {
         try {
-            const response = await axiosInstance.post("/api/auth/singIn", credentials);
+            const response = await axiosInstance.post("/api/auth/signIn", credentials);
+            console.log(response);
             
             if (response.status == 202) {
                 const userLoged = {
                         username: response.data.username,
                         token: response.data.jwt,
-                        isAuthenticate: response.data.isAuthenticate,
+                        isAuthenticated: response.data.isAuthenticate,
                         role: response.data.roles.replace(/[\\[\]" ]/g, '').split(',')[0]
                 }
                 dispatch({
@@ -61,22 +62,25 @@ export const AuthProvider = ({ children }) => {
 
                 localStorage.setItem("userAuth", JSON.stringify(userLoged))
                 
-                navigateTo("/app")
+                if (userLoged.role == "ROLE_USER") {
+                    navigateTo("/user")
+                }
+                if (userLoged.role == "ROLE_ADMIN" || userLoged.role == "ROLE_ADMIN" ) {
+                    navigateTo("/app")
+                }
             }else{
-                console.log("nologuead");
-                
+                throw new Error("no logued")
             }
             
 
         } catch (error) {
-            console.error(error);
-            
+            throw new Error("no logued" + error)
         }
     }
 
     const singUp = async (data) => {
         try {
-            const response = await axiosInstance.post("/api/auth/singUp", data)
+            const response = await axiosInstance.post("/api/user/signUp", data)
             if (response.status == 201) {
                 navigateTo("/login")
                 return {
@@ -93,9 +97,12 @@ export const AuthProvider = ({ children }) => {
   
     
     const logout = () => {
+         
         dispatch({ type: "LOGOUT" });
         localStorage.removeItem("userAuth")
+        localStorage.removeItem("sectionSidebar")
         navigateTo("/login")
+       
     };
 
     const isSomeoneAuthenticate = () => {
@@ -114,11 +121,15 @@ export const AuthProvider = ({ children }) => {
                           Authorization: `Bearer ${jwt}`,
                         },
                       });
-                    if(response.status == 203) { 
-                        logout()
+                      
+                      
+                    if(response.status == 200) { 
+                        return true;
+                    }else{
+                        return false;
                     }
                     
-                    return response.data;
+                  
                 } catch (error) {
                     console.error("Error validando token:", error);
                     return false;

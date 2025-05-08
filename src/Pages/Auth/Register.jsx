@@ -9,20 +9,19 @@ import { AuthContext } from '../../Context/AuthContext';
 import OptionToLogin from '../../Components/AuthComponents/OptionToLogin';
 import SimpleBackdrop from '../../Components/SimpleBackDrop';
 import RegisterSucces from '../../Components/AuthComponents/RegisterSucces';
+import LogoWeb from '../../Components/logoWeb';
 
 const Register = () => {
     const [registerData, setRegisterData] = useState({
         password: "",
         username: "",
         email: "",
-        roleId:1
     })
     const { singUp } = useContext(AuthContext);
     const navigate = useNavigate();
     const navigateTO = (path) => navigate(path);
     const [isLoanding, setIsLoanding] = useState(false);
     const [createCount, setCreateCount] = useState(false);
-
 
 
     const handleInputChange = (e) => {
@@ -71,7 +70,9 @@ const Register = () => {
                 <Box sx={{ position: "absolute", bottom: "70%", left: "50%", width: "50px", height: "50px", bgcolor: "rgba(255, 255, 255, 0.10)", transform: "rotate(45deg)" }} />
 
 
-                <Box sx={{ width: "100%", height: "10%" }}>Imagen logo</Box>
+                <Box sx={{ width: "100%", height: "10%", pt:"50px" }}>
+                    <LogoWeb isActive={true}/>
+                </Box>
                 <Box sx={{ width: "100%", height: "90%", display: "flex", justifyContent: "center", alignItems: "center", flexDirection: "column", p: "0px 40px" }}>
                     <Typography variant='h3' sx={{ textAlign: "center", pb: "20px", color: "white" }}>WELCOME BACK!</Typography>
                     <Typography variant='body1' sx={{ textAlign: "center", pb: "40px", color: "white", opacity: "0.50" }}>Lorem ipsum dolor sipis icing elit. Quidem praesentium possimus dolorem est conseq uuntur labo riosam accus anti</Typography>

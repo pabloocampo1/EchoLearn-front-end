@@ -2,23 +2,43 @@
 import { DarkModeOutlined, LoginOutlined, WbSunny } from '@mui/icons-material';
 
 import { Box, Typography } from '@mui/material';
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
 import { ThemeContext } from '../Context/ThemeContext';
 import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../Context/AuthContext';
 
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import LogoutIcon from '@mui/icons-material/Logout';
+import LogoWeb from './logoWeb';
+import SimpleBackdrop from './SimpleBackDrop';
 
 
 const Header = () => {
     const { darkMode, toggleDarkMode } = useContext(ThemeContext)
     const navigate = useNavigate();
+    const [isLogout, setIsLogout] = useState(false);
 
     const { state, logout } = useContext(AuthContext);
 
-    const navigateTo = (path) => {
-        navigate(path)
+    const navigateTo = () => {
+
+        if (state.role === "ROLE_USER") {
+            navigate("user/profile")
+        }
+
+        if (state.role === "ROLE_ADMIN" || state.role === "ROLE_SUPERADMIN") {
+            navigate("/app/profile")
+        }
+
+    }
+
+    const handleLogout = () => {
+        setIsLogout(() => {
+            setIsLogout(true)
+            logout()
+        }, 1000)
+
+        setIsLogout(false);
     }
 
     return (
@@ -31,10 +51,10 @@ const Header = () => {
                 alignItems: "center",
                 p: "0px 150px",
                 bgcolor: "background.paper",
+                borderBottom: "1px solid #3BB09D ",
             }}>
-            <Box>
-                <img width={50} src="https://skiandsnowboardgym.com/wp-content/uploads/2019/08/qa_icon.png" alt="img logo" />
-            </Box>
+            {isLogout && <SimpleBackdrop />}
+            <LogoWeb />
             <Box>
                 <Box component="nav"
                 >
@@ -96,21 +116,31 @@ const Header = () => {
                 alignItems: "center",
             }}>
                 <Box
-                    sx={{ mr: "10px" }}
+                    sx={{ mr: "10px", display: "flex", alignItems:"center"  }}
                     onClick={() => toggleDarkMode()}>
                     {darkMode ? <WbSunny sx={{ color: "primary.main" }} /> : <DarkModeOutlined sx={{ color: "primary.main" }} />}
                 </Box>
                 <Box
-                    sx={{ mr: "10px" }}
-                    onClick={() => navigateTo("profile")} >
-                    {state.isAuthenticated && state.role === "ROLE_USER" && (
+                    sx={{ mr: "10px",display: "flex", alignItems:"center" }}
+                    onClick={navigateTo} >
+                    {state.isAuthenticated && (
                         <AccountCircleIcon sx={{ color: "primary.main" }} />
                     )}
                 </Box>
                 <Box
-                    sx={{ mr: "10px" }}
+                    sx={{ mr: "10px", cursor:"pointer" }}
                 >
-                    {state.isAuthenticated ? <LogoutIcon onClick={() => logout()} sx={{ color: "primary.main" }} /> : <LoginOutlined onClick={() => navigateTo("/login")} sx={{ color: "primary.main" }} />}
+                    {state.isAuthenticated
+                        ? (
+                            <Box onClick={() => handleLogout()} sx={{ mr: "10px", display: "flex" }}>
+                            <LogoutIcon  sx={{ color: "primary.main" }} /> <Typography sx={{pl:"5px"}}>Logout</Typography>
+                         </Box>
+                        )
+                        : (
+                            <Box onClick={() => navigate("/login")} sx={{ mr: "10px", display: "flex" }}>
+                                <LoginOutlined  sx={{ color: "primary.main" }} /> <Typography sx={{pl:"5px"}}>Login</Typography>
+                            </Box>
+                        )}
                 </Box>
             </Box>
         </Box>

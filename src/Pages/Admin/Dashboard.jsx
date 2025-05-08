@@ -8,10 +8,14 @@ const Dashboard = () => {
     console.log(localStorage.getItem("userAuth"));
     
     return (
-        <Box >
-            dashboard
+        <Box sx={{width:"100%", minHeight:"auto", }}>
+            dashboard jej
             Hola, {state.username}
-        
+            fdfd
+            <br />
+            fdfd
+            <br />
+            
         </Box  >
     );
 };

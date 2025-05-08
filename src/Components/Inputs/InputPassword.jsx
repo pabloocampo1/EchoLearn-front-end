@@ -7,20 +7,26 @@ import PasswordIcon from '@mui/icons-material/Password';
 const InputPassWord = ({value, onChange}) => {
     return (
         <Box sx={{
-            bgcolor: "rgba(59, 176, 157, 0.05);"
+            bgcolor: "rgba(59, 176, 157, 0.05)",
+            width:{
+                xs:"200px",
+                md:"350px"
+            },
+          
         }}>
             <Box sx={{ display: 'flex', alignItems: 'flex-end' }}>
                 <PasswordIcon sx={{ color: 'action.active', mr: 1, my: 0.5 }} /> 
                 <TextField
                     id="input-with-sx"
                     type='password'
+                    autoComplete='new-password'
                     name='password'
                     required
                     value={value}
                     onChange={onChange}
                     label="Password"
                     variant="standard"
-                    sx={{ width: "350px" }} />
+                    sx={{ width: "100%" }} />
             </Box>
         </Box>
     );

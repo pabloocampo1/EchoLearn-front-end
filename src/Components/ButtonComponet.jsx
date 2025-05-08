@@ -3,7 +3,7 @@ import React from 'react';
 
 function ButtonComponent({text, onClick, colorBG, type}) {
     return (
-        <Box>
+        <Box sx={{display:"flex", justifyContent:"center"}}>
             <Button
                 sx={{
                     borderRadius: "15px",
