@@ -17,7 +17,7 @@ const InputPassWord = ({value, onChange}) => {
             <Box sx={{ display: 'flex', alignItems: 'flex-end' }}>
                 <PasswordIcon sx={{ color: 'action.active', mr: 1, my: 0.5 }} /> 
                 <TextField
-                    id="input-with-sx"
+                    id="78788"
                     type='password'
                     autoComplete='new-password'
                     name='password'

@@ -50,13 +50,12 @@ const SideBar = ({ options }) => {
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
+            justifyContent:"center",
             p: "40px 0px",
             borderRight: "1px solid #3BB09D ",
             borderRadius: "0px 15px 15px 0px"
         }}>
-            <Box sx={{ width: "100%", mb: "60px" }}>
-                <LogoWeb />
-            </Box>
+            
 
             <Box sx={{ width: "100%", height: "auto" }}>
                 <Box component="ul" sx={{ listStyle: "none" }}>

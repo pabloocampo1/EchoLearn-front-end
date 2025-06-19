@@ -39,7 +39,6 @@ const Register = () => {
             password:"",
             username:"",
             email:"",
-            roleId:1
             
         })
         if (state.state) {
@@ -48,9 +47,8 @@ const Register = () => {
             setCreateCount(false)
         }
         
-       setTimeout(() => {
-            setIsLoanding(false)
-       }, 1000)
+        setIsLoanding(false)
+      
         
     };
 

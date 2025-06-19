@@ -16,7 +16,7 @@ const AdminLayout = () => {
         }}>
             <SideBar options={adminOptions} />
             <SidebarSetting />
-            <Box sx={{ width: "80%", minHeight:"100vh", ml:"20%", mt:"8vh", p:"30px",  bgcolor: "background.default",  }} >
+            <Box sx={{ width: "80%", minHeight:"100vh", ml:"20%",  p:"30px",  bgcolor: "background.default",  }} >
                
                 <Outlet></Outlet>
             </Box>

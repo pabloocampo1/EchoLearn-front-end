@@ -27,7 +27,7 @@ const Header = () => {
         }
 
         if (state.role === "ROLE_ADMIN" || state.role === "ROLE_SUPERADMIN") {
-            navigate("/app/profile")
+            navigate("/app")
         }
 
     }

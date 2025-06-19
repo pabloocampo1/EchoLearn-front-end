@@ -20,6 +20,7 @@ import Exams from "./Pages/Admin/Exams/Exams"
 import HomeLayout from "./Pages/Layouts/HomeLayout"
 import ChangePassword from "./Pages/Auth/ChangePasswordRequest"
 import ChangeCredential from "./Pages/Auth/ChangeCredential"
+import CategoryManagment from "./Pages/Admin/Category/CategoryManagment"
 
 function App() {
     return (
@@ -35,7 +36,6 @@ function App() {
                                 <Route path="Blog" element={<Blog />} />
                                 <Route path="user" element={<PrivateRoute allowedRoles={["ROLE_USER"]} />}>
                                    
-                                        <Route index element={<Dashboard />} />
                                         <Route path="profile" element={<Profile />} />
                                     
                                 </Route>
@@ -55,9 +55,8 @@ function App() {
                                     <Route index element={<Dashboard />} />
                                     <Route path="users" element={<Users />} />
                                     <Route path="exams" element={<Exams />} />
+                                    <Route path="categorys" element={<CategoryManagment />} />
                                     <Route path="blog" element={<Blog />} />
-                                    <Route path="profile" element={<Profile />} />
-                                    
                                 </Route>
                             </Route>
 

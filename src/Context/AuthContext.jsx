@@ -1,6 +1,6 @@
 import { createContext, useEffect, useReducer } from "react";
 import axiosInstance from "../Service/Api"; 
-import { Await, useNavigate } from "react-router-dom";
+import {  useNavigate } from "react-router-dom";
 
 
 const initialValue = JSON.parse(localStorage.getItem("userAuth")) || {
@@ -44,10 +44,8 @@ export const AuthProvider = ({ children }) => {
     }
 
     const singIn = async (credentials) => {
-        try {
+        try {        
             const response = await axiosInstance.post("/api/auth/signIn", credentials);
-            console.log(response);
-            
             if (response.status == 202) {
                 const userLoged = {
                         username: response.data.username,
@@ -61,6 +59,7 @@ export const AuthProvider = ({ children }) => {
                 })
 
                 localStorage.setItem("userAuth", JSON.stringify(userLoged))
+               
                 
                 if (userLoged.role == "ROLE_USER") {
                     navigateTo("/user")
@@ -80,7 +79,7 @@ export const AuthProvider = ({ children }) => {
 
     const singUp = async (data) => {
         try {
-            const response = await axiosInstance.post("/api/user/signUp", data)
+            const response = await axiosInstance.post("/api/auth/signUp", data)
             if (response.status == 201) {
                 navigateTo("/login")
                 return {
