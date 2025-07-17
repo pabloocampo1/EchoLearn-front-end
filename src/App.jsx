@@ -21,6 +21,7 @@ import HomeLayout from "./Pages/Layouts/HomeLayout"
 import ChangePassword from "./Pages/Auth/ChangePasswordRequest"
 import ChangeCredential from "./Pages/Auth/ChangeCredential"
 import CategoryManagment from "./Pages/Admin/Category/CategoryManagment"
+import ExamSummaryHome from "./Pages/Home/Sections/ExamSummaryHome"
 
 function App() {
     return (
@@ -31,7 +32,7 @@ function App() {
                         <Routes>
                             <Route path="/" element={<HomeLayout />}>
                                 <Route index element={<Home />} />
-                                <Route path="Exams" element={<Exams />} />
+                                <Route path="ExamsHome" element={<ExamSummaryHome />} />
                                 <Route path="Exercice" element={<Exercice />} />
                                 <Route path="Blog" element={<Blog />} />
                                 <Route path="user" element={<PrivateRoute allowedRoles={["ROLE_USER"]} />}>
@@ -54,12 +55,12 @@ function App() {
                                 <Route element={<AdminLayout />}>
                                     <Route index element={<Dashboard />} />
                                     <Route path="users" element={<Users />} />
-                                    <Route path="exams" element={<Exams />} />
+                                    {/* <Route path="exams" element={<Exams />} /> */}
                                     <Route path="categorys" element={<CategoryManagment />} />
                                     <Route path="blog" element={<Blog />} />
                                 </Route>
                             </Route>
-
+    
 
                             <Route path="*" element={<NotFound />} />
                         </Routes>

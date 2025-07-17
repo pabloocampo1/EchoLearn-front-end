@@ -8,12 +8,12 @@ const HomeLayout = () => {
     return (
         <Box sx={{
             width:"100%",
-            height:"auto",
+            
         }}>
             <Header />
-                <Box sx={{pt:"40px"}}>
-                    <Outlet></Outlet>
-                </Box>
+                
+            <Outlet></Outlet>
+                
             <Footer />
         </Box>
     );

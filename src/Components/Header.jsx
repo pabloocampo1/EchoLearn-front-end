@@ -65,7 +65,7 @@ const Header = () => {
                         listStyle: "none"
                     }}>
                         <Typography
-                            onClick={() => navigateTo("/")}
+                            onClick={() => navigate("/")}
                             component="li"
                             sx={{
                                 pr: "15px",
@@ -76,7 +76,7 @@ const Header = () => {
                             }}
                         >Inicio</Typography>
                         <Typography
-                            onClick={() => navigateTo("Exams")}
+                            onClick={() => navigate("ExamsHome")}
                             component="li"
                             sx={{
                                 pr: "15px",
@@ -86,7 +86,7 @@ const Header = () => {
                                 },
                             }}>Examenes</Typography>
                         <Typography
-                            onClick={() => navigateTo("/Exercice")}
+                            onClick={() => navigate("Exercice")}
                             component="li"
                             sx={{
                                 pr: "15px",
@@ -96,7 +96,7 @@ const Header = () => {
                                 },
                             }}>Ejercicios</Typography>
                         <Typography
-                            onClick={() => navigateTo("/Blog")}
+                            onClick={() => navigate("Blog")}
                             component="li"
                             sx={{
                                 pr: "15px",
