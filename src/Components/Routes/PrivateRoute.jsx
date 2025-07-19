@@ -14,6 +14,7 @@ const PrivateRoute = ({ allowedRoles }) => {
     }
 
     if (!allowedRoles.includes(state.role)) {
+      
         return <Navigate to="/" replace />;
     } 
    

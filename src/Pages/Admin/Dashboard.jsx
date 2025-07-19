@@ -5,7 +5,7 @@ import { Box } from '@mui/material';
 const Dashboard = () => {
     const {state} = useContext(AuthContext);
 
-    console.log(localStorage.getItem("userAuth"));
+    console.log(state);
     
     return (
         <Box sx={{width:"100%", minHeight:"auto", }}>

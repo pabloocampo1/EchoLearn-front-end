@@ -21,14 +21,18 @@ const Header = () => {
     const { state, logout } = useContext(AuthContext);
 
     const navigateTo = () => {
+       
+
+        if (state.role === "ROLE_ADMIN" || state.role === "ROLE_SUPERADMIN") {
+            navigate("/app")
+        }
+        
 
         if (state.role === "ROLE_USER") {
             navigate("user/profile")
         }
 
-        if (state.role === "ROLE_ADMIN" || state.role === "ROLE_SUPERADMIN") {
-            navigate("/app")
-        }
+        
 
     }
 
@@ -122,7 +126,7 @@ const Header = () => {
                 </Box>
                 <Box
                     sx={{ mr: "10px",display: "flex", alignItems:"center" }}
-                    onClick={navigateTo} >
+                    onClick={() => navigateTo()} >
                     {state.isAuthenticated && (
                         <AccountCircleIcon sx={{ color: "primary.main" }} />
                     )}

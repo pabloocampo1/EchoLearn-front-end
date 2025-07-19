@@ -33,10 +33,11 @@ function App() {
                             <Route path="/" element={<HomeLayout />}>
                                 <Route index element={<Home />} />
                                 <Route path="ExamsHome" element={<ExamSummaryHome />} />
+                        
                                 <Route path="Exercice" element={<Exercice />} />
                                 <Route path="Blog" element={<Blog />} />
                                 <Route path="user" element={<PrivateRoute allowedRoles={["ROLE_USER"]} />}>
-                                   
+                            
                                         <Route path="profile" element={<Profile />} />
                                     
                                 </Route>

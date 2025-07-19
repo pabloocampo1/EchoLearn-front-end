@@ -1,8 +1,9 @@
-import { CategoryTwoTone } from '@mui/icons-material';
+import { CategoryTwoTone, Home, HomeMaxOutlined } from '@mui/icons-material';
 import InsertChartIcon from '@mui/icons-material/InsertChart';
 import SupervisedUserCircleIcon from '@mui/icons-material/SupervisedUserCircle';
 
 export const adminOptions = [
+  // { name: "home", title: "Home", path: "/", icon: <Home /> },
   { name: "dashboard", title: "Dashboard", path: "/app", icon: <InsertChartIcon /> },
   { name: "users", title: "Users", path: "users", icon: <SupervisedUserCircleIcon /> },
   { name: "exams", title: "Exams", path: "exams", icon: <InsertChartIcon /> },
