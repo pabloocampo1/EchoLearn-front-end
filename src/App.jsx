@@ -22,6 +22,7 @@ import ChangePassword from "./Pages/Auth/ChangePasswordRequest"
 import ChangeCredential from "./Pages/Auth/ChangeCredential"
 import CategoryManagment from "./Pages/Admin/Category/CategoryManagment"
 import ExamSummaryHome from "./Pages/Home/Sections/ExamSummaryHome"
+import ExamCreateSection from "./Pages/Admin/Exams/ExamCreateSection"
 
 function App() {
     return (
@@ -56,7 +57,8 @@ function App() {
                                 <Route element={<AdminLayout />}>
                                     <Route index element={<Dashboard />} />
                                     <Route path="users" element={<Users />} />
-                                    {/* <Route path="exams" element={<Exams />} /> */}
+                                    <Route path="exams/managment" element={<Exams />} /> 
+                                    <Route path="create/exam" element={<ExamCreateSection />} /> 
                                     <Route path="categorys" element={<CategoryManagment />} />
                                     <Route path="blog" element={<Blog />} />
                                 </Route>
