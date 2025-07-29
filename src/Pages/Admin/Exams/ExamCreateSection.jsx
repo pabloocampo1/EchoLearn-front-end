@@ -190,7 +190,7 @@ const ExamCreateSection = ({ cancelCreate, examData = {} }) => {
                             Select the subcategories for this test
                         </MenuItem>
 
-                        {subcategories.map((subcategory) => (
+                        {subcategories.length >= 0 && subcategories.map((subcategory) => (
                             <MenuItem
                                 key={subcategory.id_subcategory}
                                 value={subcategory.id_subcategory}
