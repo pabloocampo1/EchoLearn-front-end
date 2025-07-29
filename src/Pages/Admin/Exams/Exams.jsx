@@ -1,69 +1,22 @@
-import { EmojiEventsOutlined, LockClockOutlined, MoreVertOutlined, PointOfSale, PunchClock } from '@mui/icons-material';
+
 import { Box, Button, Typography } from '@mui/material';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import ListExamUI from './ComponetsExamCustom/ListExamUI';
 import ExamCreateSection from './ExamCreateSection';
+import axiosInstance from '../../../Service/Api';
 
 const Exams = () => {
     const [tests, setTests] = useState([
         {
-            "imageCategory": "url",
-            "subcategoryTitle": "javascript",
-            "titleExam": "JS basic sintax",
-            "id": "23",
-            "points": "3000",
-            "time": "10 min",
-            "numberOfQuestions": "15"
-        },
-        {
-            "imageCategory": "url",
-            "subcategoryTitle": "javascript",
-            "titleExam": "JS basic sintax",
-            "id": "23",
-            "points": "3000",
-            "time": "10 min",
-            "numberOfQuestions": "15"
-        }, {
-            "imageCategory": "url",
-            "subcategoryTitle": "javascript",
-            "titleExam": "JS basic sintax",
-            "id": "23",
-            "points": "3000",
-            "time": "10 min",
-            "numberOfQuestions": "15"
-        }, {
-            "imageCategory": "url",
-            "subcategoryTitle": "javascript",
-            "titleExam": "JS basic sintax",
-            "id": "23",
-            "points": "3000",
-            "time": "10 min",
-            "numberOfQuestions": "15"
-        }, {
-            "imageCategory": "url",
-            "subcategoryTitle": "javascript",
-            "titleExam": "JS basic sintax",
-            "id": "23",
-            "points": "3000",
-            "time": "10 min",
-            "numberOfQuestions": "15"
-        }, {
-            "imageCategory": "url",
-            "subcategoryTitle": "javascript",
-            "titleExam": "JS basic sintax",
-            "id": "23",
-            "points": "3000",
-            "time": "10 min",
-            "numberOfQuestions": "15"
-        }, {
-            "imageCategory": "url",
-            "subcategoryTitle": "javascript",
-            "titleExam": "JS basic sintax",
-            "id": "23",
-            "points": "3000",
-            "time": "10 min",
-            "numberOfQuestions": "15"
-        },
+            "id": 23,
+            "categoryImageUrl": "url",
+            "subcategoryTitle": "JavaScript",
+            "examTitle": "JS Basic Syntax",
+            "points": 3000,
+            "durationMinutes": 10,
+            "questionCount": 15
+        }
+
     ])
 
     const [createExamOption, setCreateExamOption] = useState(false);
@@ -74,26 +27,32 @@ const Exams = () => {
 
         // fetch de data about what is the exam for edit and show the information
         setDataExamEdit({
+            "id_exam": "2",
             "title": "Título del examen.",
             "description": " Breve descripción opcional.,",
             "level": "hard",
             "duration": 10,
             "points": 999,
+            // add subcategories relation
             "available": true,
             "questions": [
                 {
+                    "id_question": "2",
                     "question": "melena pues vengo de uno",
                     "available": true,
                     "answers": [
                         {
+                            "id_answer": "3",
                             "answerText": "no se mano",
                             "isCorrect": false
                         },
                         {
+                            "id_answer": "3",
                             "answerText": "no se mano x2",
                             "isCorrect": false
                         },
                         {
+                            "id_answer": "3",
                             "answerText": "no se mano x3",
                             "isCorrect": true
                         }
@@ -103,12 +62,28 @@ const Exams = () => {
         })
         console.log(id_exam);
         setCreateExamOption(true)
-        
+
     }
 
+    useEffect(() => {
+        const fetchDataExams = async () => {
+            try {
+                const response  = await axiosInstance.get("/api/exam/getAll/home");
+                setTests(response.data)
+                
+            } catch (error) {
+                console.log(error
+                );
+                
+            }
+        }
+
+        fetchDataExams()
+    }, [])
 
 
-    return (
+
+    return (  
         <Box>
             <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "end" }}>
                 <Box>
@@ -120,12 +95,12 @@ const Exams = () => {
             </Box>
 
             {createExamOption ? (
-                <ExamCreateSection cancelCreate={() => setCreateExamOption(false)} examData={dataExamEdit} />
+                <ExamCreateSection cancelCreate={() => { setCreateExamOption(false), setDataExamEdit({}) }} examData={dataExamEdit} />
             ) : (
                 <>
                     <Box sx={{
                         width: "100%",
-                        height: "10vh",
+                        height: "auto",
                         mt: "50px",
                         mb: "50px",
                         display: "grid",
@@ -155,4 +130,6 @@ const Exams = () => {
 };
 
 export default Exams;
+
+
 

@@ -6,6 +6,7 @@ import { useState } from 'react';
 import GenericModal from '../../../Components/GenericModal';
 import CategoryForm from '../../../Components/forms/CategoryForm';
 import { deleteCategory } from '../../../Service/CategoryService';
+import SimpleBackdrop from '../../../Components/SimpleBackDrop';
 
 
 const TableCategory = ({ data = [], onChange }) => {
@@ -37,7 +38,7 @@ const TableCategory = ({ data = [], onChange }) => {
 
 
     if (data.length === 0) {
-        return <Typography>No categories found.</Typography>
+        return <SimpleBackdrop />
     }
 
 

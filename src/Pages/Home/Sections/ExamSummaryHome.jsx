@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import axiosInstance from '../../../Service/Api';
 import imageNotFoundImage from "../../../assets/notPhotoFound.webp"
 import SectionOfSubcategoriesExams from './SectionOfSubcategoriesExams';
+import SimpleBackdrop from '../../../Components/SimpleBackDrop';
 
 const ExamSummaryHome = () => {
     const [categoriesListFetch, setCategoriesListFetch] = useState([]);
@@ -44,6 +45,10 @@ const ExamSummaryHome = () => {
 
         fetchData()
     }, []);
+
+   if(categoriesListFetch.length <= 0){
+    return <SimpleBackdrop />
+   }
 
 
 

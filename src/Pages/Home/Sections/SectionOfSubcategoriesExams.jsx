@@ -3,6 +3,7 @@ import { Box, Button, Typography, Card, CardContent, CardMedia, Grid } from '@mu
 import React, { useEffect, useState } from 'react';
 import axiosInstance from '../../../Service/Api';
 import imageNotFoundImage from "../../../assets/notPhotoFound.webp"
+import SimpleBackdrop from '../../../Components/SimpleBackDrop';
 
 
 const SectionOfSubcategoriesExams = ({ idCategory, goBackToCategories, categoryTitle }) => {
@@ -21,6 +22,10 @@ const SectionOfSubcategoriesExams = ({ idCategory, goBackToCategories, categoryT
         }
         fetchData(idCategory)
     }, [])
+
+    if(fetchData.length <= 0){
+        return <SimpleBackdrop />
+    }
     return (
         <Box sx={{
             width: "100%",
@@ -43,9 +48,7 @@ const SectionOfSubcategoriesExams = ({ idCategory, goBackToCategories, categoryT
                </Box>
             </Box>
             <Box>
-                {fetchData.length <= 0
-                    && ("No There are results...")}
-
+    
                 <Grid container spacing={2}>
                     {fetchData.map((subcategory) => (
                         <Grid item xs={12} sm={6} md={4} key={subcategory.id_subcategory}>
