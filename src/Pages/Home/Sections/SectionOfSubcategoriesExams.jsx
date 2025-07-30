@@ -4,10 +4,13 @@ import React, { useEffect, useState } from 'react';
 import axiosInstance from '../../../Service/Api';
 import imageNotFoundImage from "../../../assets/notPhotoFound.webp"
 import SimpleBackdrop from '../../../Components/SimpleBackDrop';
+import ListExamUI from '../../Admin/Exams/ComponetsExamCustom/ListExamUI';
 
 
 const SectionOfSubcategoriesExams = ({ idCategory, goBackToCategories, categoryTitle }) => {
     const [fetchData, setFetchData] = useState([]);
+    const [showTest, setIsShowTest] = useState(false);
+    const [testList, setTestList] = useState([]);
 
     useEffect(() => {
         const fetchData = async (id_category) => {
@@ -23,7 +26,26 @@ const SectionOfSubcategoriesExams = ({ idCategory, goBackToCategories, categoryT
         fetchData(idCategory)
     }, [])
 
-    if(fetchData.length <= 0){
+    const handleShowTest = async (id_subcategory) => {
+        try {
+            const response = await axiosInstance.get(`/api/exam/getBySubcategory/${id_subcategory}`);
+            setTestList(response.data)
+
+
+        } catch (error) {
+            console.error(error);
+
+        }
+
+        setIsShowTest(true)
+    }
+
+    const showSubcategories = () => {
+        setIsShowTest(false)
+        setTestList([])
+    }
+
+    if (fetchData.length <= 0) {
         return <SimpleBackdrop />
     }
     return (
@@ -34,62 +56,80 @@ const SectionOfSubcategoriesExams = ({ idCategory, goBackToCategories, categoryT
         }}>
 
             <Box sx={{ width: "100%", display: "flex", justifyContent: "start", mb: "20px" }}>
-
-                <Button onClick={goBackToCategories} variant='text'> <ArrowBack></ArrowBack>  go back</Button>
-               
+                <Button onClick={goBackToCategories} variant='outlined'> <ArrowBack></ArrowBack> Go back to categories</Button>
             </Box>
 
             <Box sx={{ width: "100%", display: "flex", justifyContent: "space-between", mb: "50px" }}>
-                 <Typography sx={{ fontSize: "30px" }} variant='h3'>{categoryTitle}</Typography>
-               <Box sx={{display: "flex", justifyContent: "space-between",}}>
-                 <Typography sx={{ fontSize: "30px" }} variant='h3'>action</Typography>
-                 <Typography sx={{ fontSize: "30px" }} variant='h3'>action</Typography>
-                 <Typography sx={{ fontSize: "30px" }} variant='h3'>action</Typography>
-               </Box>
+                <Typography sx={{ fontSize: "30px" }} variant='h3'>{categoryTitle}</Typography>
+                <Box sx={{ display: "flex", justifyContent: "space-between", }}>
+                    <Typography sx={{ fontSize: "30px" }} variant='h3'>action</Typography>
+                    <Typography sx={{ fontSize: "30px" }} variant='h3'>action</Typography>
+                    <Typography sx={{ fontSize: "30px" }} variant='h3'>action</Typography>
+                </Box>
             </Box>
-            <Box>
-    
-                <Grid container spacing={2}>
-                    {fetchData.map((subcategory) => (
-                        <Grid item xs={12} sm={6} md={4} key={subcategory.id_subcategory}>
-                            <Card sx={{ boxShadow: "none", borderRadius: 3 }}>
-                                {subcategory.image ? (
-                                    <CardMedia
-                                        component="img"
-                                        height="140"
-                                        image={subcategory.image}
-                                        alt={subcategory.title}
-                                        sx={{ objectFit: 'cover' }}
-                                    />
-                                ) : (<CardMedia
-                                        component="img"
-                                        height="140"
-                                        image={imageNotFoundImage}
-                                        alt={subcategory.title}
-                                        sx={{ objectFit: 'cover' }}
-                                    />)}
-                                <CardContent>
-                                    <Typography variant="h6" gutterBottom>
-                                        {subcategory.title}
-                                    </Typography>
+            {showTest ? (
+                <Box>
+                    {testList.length >= 1 ? (
+                        <Box >
+                            <Button sx={{ mb: "20px" }} onClick={() => showSubcategories()}><ArrowBack sx={{ mr: "10px" }}></ArrowBack>  Go back to subcategories</Button>
+                            {testList.map(test => {
+                                return (
+                                    <ListExamUI test={test} isTakeExam={true} />
+                                )
+                            })}
+                        </Box>
+                    ) : (
+                        "No there are exam for this subcategory"
+                    )}
+                </Box>
+            ) :
+                (
+                    <Box>
 
-                                    <Typography variant="body2"  sx={{ mb: 1 }}>
-                                       {subcategory.description}
-                                    </Typography>
+                        <Grid container spacing={2}>
+                            {fetchData.map((subcategory) => (
+                                <Grid item xs={12} sm={6} md={4} key={subcategory.id_subcategory}>
+                                    <Card sx={{ boxShadow: "none", borderRadius: 3 }}>
+                                        {subcategory.image ? (
+                                            <CardMedia
+                                                component="img"
+                                                height="140"
+                                                image={subcategory.image}
+                                                alt={subcategory.title}
+                                                sx={{ objectFit: 'cover' }}
+                                            />
+                                        ) : (<CardMedia
+                                            component="img"
+                                            height="140"
+                                            image={imageNotFoundImage}
+                                            alt={subcategory.title}
+                                            sx={{ objectFit: 'cover' }}
+                                        />)}
+                                        <CardContent>
+                                            <Typography variant="h6" gutterBottom>
+                                                {subcategory.title}
+                                            </Typography>
 
-                                    <Box textAlign="center">
-                                        <Button variant="outlined" size="small">
-                                            Show tests
-                                        </Button>
-                                    </Box>
-                                </CardContent>
-                            </Card>
+                                            <Typography variant="body2" sx={{ mb: 1 }}>
+                                                {subcategory.description}
+                                            </Typography>
+
+                                            <Box textAlign="center">
+                                                <Button variant="outlined" size="small"
+                                                    onClick={() => handleShowTest(subcategory.id_subcategory)}
+                                                >
+                                                    Show tests
+                                                </Button>
+                                            </Box>
+                                        </CardContent>
+                                    </Card>
+                                </Grid>
+                            ))}
                         </Grid>
-                    ))}
-                </Grid>
 
 
-            </Box>
+                    </Box>
+                )}
         </Box>
     );
 };

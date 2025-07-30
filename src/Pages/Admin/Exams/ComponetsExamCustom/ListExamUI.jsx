@@ -3,11 +3,13 @@ import { DeleteOutline, EditNoteOutlined, EmojiEventsOutlined, Image, InsertChar
 import { Box, Typography } from '@mui/material';
 import ButtonComponent from '../../../../Components/ButtonComponet';
 import SimpleBackdrop from '../../../../Components/SimpleBackDrop';
+import { useContext } from 'react';
+import { AuthContext } from '../../../../Context/AuthContext';
 
 
 
 const ListExamUI = ({ test = {}, isTakeExam, editExam }) => {
-
+    const { state } = useContext(AuthContext);
 
     function capitalizeFirstWord(text) {
         if (!text) return "";
@@ -21,7 +23,7 @@ const ListExamUI = ({ test = {}, isTakeExam, editExam }) => {
     }
 
     return (
-        <Box key={test.id}
+        <Box key={test.id_exam}
             sx={{
                 width: "100%",
                 height: "50px",
@@ -37,9 +39,9 @@ const ListExamUI = ({ test = {}, isTakeExam, editExam }) => {
                 {test.level === "intermediate" && (<Box sx={{ width: "20px", height: "20px", bgcolor: "yellow" }}></Box>)}
                 {test.level === "hard" && (<Box sx={{ width: "20px", height: "20px", bgcolor: "red" }}></Box>)}
                 <Typography sx={{ pl: "10px" }}>{capitalizeFirstWord(test.level)}</Typography>
-                <Box sx={{width:"1px",height:"70%", bgcolor:"#2A8A7A", ml:"10px", mr: "10px"}}></Box>
-               <Typography sx={{ fontWeight: "bold", fontSize: "16px" }}>{test.title}</Typography>
-                
+                <Box sx={{ width: "1px", height: "70%", bgcolor: "#2A8A7A", ml: "10px", mr: "10px" }}></Box>
+                <Typography sx={{ fontWeight: "bold", fontSize: "16px" }}>{test.title}</Typography>
+
             </Box>
 
             <Box sx={{ width: "50%", display: "flex", justifyContent: "end", alignItems: "center" }}>
@@ -55,13 +57,21 @@ const ListExamUI = ({ test = {}, isTakeExam, editExam }) => {
                     <PunchClock />
                     <Typography sx={{ ml: "5px", opacity: "0.60" }}>{test.duration}</Typography>
                 </Box>
-                <Box sx={{ width: { xs: "20%", mb: "30%" }, display: "flex", justifyContent: "center", alignItems: "center", borderLeft: "1px solid  #2A8A7A" }}>
+                <Box sx={{ width: { xs: "30%", mb: "30%" }, display: "flex", justifyContent: "center", alignItems: "center", borderLeft: "1px solid  #2A8A7A" }}>
                     {isTakeExam ? (
-                        <> <ButtonComponent />
+                        <> <ButtonComponent text={"Show more"} width='100px' height='20px' />
                         </>
                     ) : (
-                        <> <DeleteOutline sx={{ mr: "10px" }} />
-                            <EditNoteOutlined onClick={() => editExam(test.id)} /></>
+                        <>
+                            {state.isAuthenticated && state.role == "ROLE_ADMIN" || state.role == "ROLE_SUPERADMIN" ? (
+                                <>
+                                    <DeleteOutline sx={{ mr: "10px" }} />
+                                    <EditNoteOutlined onClick={() => editExam(test.id)} />
+                                </>
+                            ) : (
+                                ""
+                            )}
+                        </>
                     )}
                 </Box>
             </Box>
