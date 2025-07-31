@@ -212,7 +212,7 @@ const ExamCreateSection = ({ cancelCreate, examData = {} }) => {
                             Select the level of the test
                         </MenuItem>
                         <MenuItem value="easy">Easy</MenuItem>
-                        <MenuItem value="intermedio">Intermediate</MenuItem>
+                        <MenuItem value="intermediate">Intermediate</MenuItem>
                         <MenuItem value="hard">Hard</MenuItem>
                     </Select>
                     {errors.level && <FormHelperText>This field is required</FormHelperText>}

@@ -5,11 +5,15 @@ import ButtonComponent from '../../../../Components/ButtonComponet';
 import SimpleBackdrop from '../../../../Components/SimpleBackDrop';
 import { useContext } from 'react';
 import { AuthContext } from '../../../../Context/AuthContext';
+import { TakeExamContext } from '../../../../Context/ExamContext';
+import { useNavigate } from 'react-router-dom';
 
 
 
 const ListExamUI = ({ test = {}, isTakeExam, editExam }) => {
     const { state } = useContext(AuthContext);
+    const {setExamSelected} = useContext(TakeExamContext);
+    const naviagate = useNavigate();
 
     function capitalizeFirstWord(text) {
         if (!text) return "";
@@ -59,7 +63,7 @@ const ListExamUI = ({ test = {}, isTakeExam, editExam }) => {
                 </Box>
                 <Box sx={{ width: { xs: "30%", mb: "30%" }, display: "flex", justifyContent: "center", alignItems: "center", borderLeft: "1px solid  #2A8A7A" }}>
                     {isTakeExam ? (
-                        <> <ButtonComponent text={"Show more"} width='100px' height='20px' />
+                        <> <ButtonComponent text={"Show more"} width='100px' height='20px' onClick={() => {setExamSelected(test), naviagate("/exam") }} />
                         </>
                     ) : (
                         <>

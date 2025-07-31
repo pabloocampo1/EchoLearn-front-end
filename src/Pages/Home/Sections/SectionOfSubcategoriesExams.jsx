@@ -1,16 +1,19 @@
 import { ArrowBack } from '@mui/icons-material';
 import { Box, Button, Typography, Card, CardContent, CardMedia, Grid } from '@mui/material';
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import axiosInstance from '../../../Service/Api';
 import imageNotFoundImage from "../../../assets/notPhotoFound.webp"
 import SimpleBackdrop from '../../../Components/SimpleBackDrop';
 import ListExamUI from '../../Admin/Exams/ComponetsExamCustom/ListExamUI';
+import LoandingText from '../../../Components/LoandingText';
+import { TakeExamContext } from '../../../Context/ExamContext';
 
 
 const SectionOfSubcategoriesExams = ({ idCategory, goBackToCategories, categoryTitle }) => {
     const [fetchData, setFetchData] = useState([]);
     const [showTest, setIsShowTest] = useState(false);
     const [testList, setTestList] = useState([]);
+    const {setSubCategoryImageSelect} = useContext(TakeExamContext);
 
     useEffect(() => {
         const fetchData = async (id_category) => {
@@ -46,7 +49,7 @@ const SectionOfSubcategoriesExams = ({ idCategory, goBackToCategories, categoryT
     }
 
     if (fetchData.length <= 0) {
-        return <SimpleBackdrop />
+        return <LoandingText />
     }
     return (
         <Box sx={{
@@ -74,7 +77,7 @@ const SectionOfSubcategoriesExams = ({ idCategory, goBackToCategories, categoryT
                             <Button sx={{ mb: "20px" }} onClick={() => showSubcategories()}><ArrowBack sx={{ mr: "10px" }}></ArrowBack>  Go back to subcategories</Button>
                             {testList.map(test => {
                                 return (
-                                    <ListExamUI test={test} isTakeExam={true} />
+                                    <ListExamUI test={test} isTakeExam={true}/>
                                 )
                             })}
                         </Box>
@@ -116,7 +119,7 @@ const SectionOfSubcategoriesExams = ({ idCategory, goBackToCategories, categoryT
 
                                             <Box textAlign="center">
                                                 <Button variant="outlined" size="small"
-                                                    onClick={() => handleShowTest(subcategory.id_subcategory)}
+                                                    onClick={() => { setSubCategoryImageSelect(subcategory.image),  handleShowTest(subcategory.id_subcategory)}}
                                                 >
                                                     Show tests
                                                 </Button>
