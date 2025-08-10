@@ -7,12 +7,15 @@ import { ThemeContext, ThemeContextProvider } from '../../../Context/ThemeContex
 import LogoWeb from '../../../Components/logoWeb';
 
 
+
 const PreviuwSummaryExam = () => {
 
     const { examSelected } = useContext(TakeExamContext);
     const navigate = useNavigate();
     const { subCategoryImageSelect } = useContext(TakeExamContext);
     const { darkMode, toggleDarkMode } = useContext(ThemeContext);
+
+
 
     if (!examSelected) {
         return (
@@ -30,6 +33,8 @@ const PreviuwSummaryExam = () => {
             </Box>
         )
     }
+
+
     return (
         <Box
             sx={{
@@ -148,7 +153,8 @@ const PreviuwSummaryExam = () => {
                             {examSelected.description}
                         </Typography>
                     </Box>
-                    <Button variant='contained'>Take exam</Button>
+                    <Button variant='contained' onClick={() => navigate(`questions/${examSelected.id_exam}`)}>Take exam</Button>
+
                 </Box>
             </Box>
         </Box>

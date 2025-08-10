@@ -25,6 +25,7 @@ import ExamSummaryHome from "./Pages/Home/Exam/ExamSummaryHome"
 import ExamCreateSection from "./Pages/Admin/Exams/ExamCreateSection"
 import { ExamContextProvider } from "./Context/ExamContext"
 import PreviuwSummaryExam from "./Pages/Home/Exam/PreviuwSummaryExam"
+import ExamQuestionPage from "./Pages/Home/Exam/ExamQuestionPage"
 
 function App() {
     return (
@@ -48,8 +49,9 @@ function App() {
                                     </Route>
                                 </Route>
 
-                                <Route path="/exam">
+                                <Route path="/exam" element={<PrivateRoute allowedRoles={["ROLE_USER"]} />}>
                                     <Route index element={<PreviuwSummaryExam />} />
+                                     <Route path="questions/:examId" element={<ExamQuestionPage />} />
 
                                 </Route>
 

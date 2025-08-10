@@ -5,7 +5,7 @@ const LoandingText = () => {
     return (
         <Box sx={{
             width:"100%",
-            height:"100vh",
+            height:"50vh",
             display:"flex",
             alignItems:"center",
             justifyContent:"center"

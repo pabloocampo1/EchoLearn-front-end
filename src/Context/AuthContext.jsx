@@ -6,6 +6,7 @@ import {  useNavigate } from "react-router-dom";
 const initialValue = JSON.parse(localStorage.getItem("userAuth")) || {
     username: null,
     token: null,
+    userId: null,
     isAuthenticated: false,
     role: null,
   };
@@ -17,6 +18,7 @@ const authReducer = (state, action) => {
                 ...state,
                 username: action.payload.username,
                 token: action.payload.token,
+                userId: action.payload.userId,
                 isAuthenticated: action.payload.isAuthenticated,
                 role: action.payload.role,
             };
@@ -25,6 +27,7 @@ const authReducer = (state, action) => {
                 ...state,
                 username: null,
                 token: null,
+                userId:null,
                 isAuthenticated: false,
                 role:null
             };
@@ -50,6 +53,7 @@ export const AuthProvider = ({ children }) => {
                 const userLoged = {
                         username: response.data.username,
                         token: response.data.jwt,
+                        userId: response.data.user_id,
                         isAuthenticated: response.data.isAuthenticate,
                         role: response.data.roles.replace(/[\\[\]" ]/g, '').split(',')[0]
                 }
