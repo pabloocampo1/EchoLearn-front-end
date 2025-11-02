@@ -1,0 +1,8 @@
+{
+    "printWidth": 80,
+    "tabWidth": 4,
+    "jsxSingleQuote": false,
+    "bracketSameLine": false,
+    "arrowParens": "always",
+    "htmlWhitespaceSensitivity": "ignore"
+}

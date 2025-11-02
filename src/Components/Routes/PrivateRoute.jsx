@@ -1,26 +1,16 @@
-import { useContext } from 'react';
-import { AuthContext } from '../../Context/AuthContext';
-import { Outlet, Navigate } from 'react-router-dom';
-import SimpleBackdrop from '../SimpleBackDrop';
-const PrivateRoute = ({ allowedRoles }) => {
-    const { state } = useContext(AuthContext);
+import { useContext } from "react";
+import { AuthContext } from "../../Context/AuthContext";
+import { Outlet, Navigate } from "react-router-dom";
 
-    if (state.isAuthenticated === null) {
-        return null; 
-    }
+const PrivateRoute = ({ allowedRoles, children }) => {
+  const { state } = useContext(AuthContext);
 
-    if (!state.isAuthenticated) {
-        return <Navigate to="/login" replace />;
-    }
+  if (state.isAuthenticated === null) return null;
+  if (!state.isAuthenticated) return <Navigate to="/login" replace />;
+  if (!allowedRoles.includes(state.role)) return <Navigate to="/" replace />;
 
-    if (!allowedRoles.includes(state.role)) {
-      
-        return <Navigate to="/" replace />;
-    } 
-   
-
-    return <Outlet />;
+  // Si tiene permiso, renderiza el layout y sus rutas hijas
+  return children ? children : <Outlet />;
 };
-
 
 export default PrivateRoute;
